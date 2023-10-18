@@ -1,60 +1,70 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-//import "hardhat/console.sol";
+// Import any necessary libraries or modules here if needed.
+// import "hardhat/console.sol";
 
 contract Assessment {
-    address payable public owner;
-    uint256 public balance;
+    address payable public owner; // Public variable to store the owner's address.
+    uint256 public balance; // Public variable to store the contract's balance.
 
-    event Deposit(uint256 amount);
-    event Withdraw(uint256 amount);
+    event Deposit(uint256 amount); // Event to log deposits.
+    event Withdraw(uint256 amount); // Event to log withdrawals.
 
+    // Constructor to initialize the contract with an initial balance.
     constructor(uint initBalance) payable {
-        owner = payable(msg.sender);
-        balance = initBalance;
+        owner = payable(msg.sender); // Set the contract owner to the sender of the deployment transaction.
+        balance = initBalance; // Set the initial balance to the provided parameter.
     }
 
-    function getBalance() public view returns(uint256){
+    // Function to get the current balance of the contract.
+    function getBalance() public view returns(uint256) {
         return balance;
     }
 
+    // Function to deposit funds into the contract.
     function deposit(uint256 _amount) public payable {
         uint _previousBalance = balance;
 
-        // make sure this is the owner
+        // Ensure that the sender is the owner.
         require(msg.sender == owner, "You are not the owner of this account");
 
-        // perform transaction
+        // Increase the contract's balance by the deposit amount.
         balance += _amount;
 
-        // assert transaction completed successfully
+        // Assert that the balance has been updated correctly.
         assert(balance == _previousBalance + _amount);
 
-        // emit the event
+        // Emit the Deposit event to log the deposit.
         emit Deposit(_amount);
     }
 
-    // custom error
+    // Custom error definition for insufficient balance.
     error InsufficientBalance(uint256 balance, uint256 withdrawAmount);
 
+    // Function to withdraw funds from the contract.
     function withdraw(uint256 _withdrawAmount) public {
+        // Ensure that the sender is the owner.
         require(msg.sender == owner, "You are not the owner of this account");
         uint _previousBalance = balance;
+
+        // Check if the balance is sufficient for the requested withdrawal.
         if (balance < _withdrawAmount) {
+            // Revert with the InsufficientBalance error if there's not enough balance.
             revert InsufficientBalance({
                 balance: balance,
                 withdrawAmount: _withdrawAmount
             });
         }
 
-        // withdraw the given amount
+        // Deduct the withdrawal amount from the contract's balance.
         balance -= _withdrawAmount;
 
-        // assert the balance is correct
+        // Assert that the balance has been updated correctly.
         assert(balance == (_previousBalance - _withdrawAmount));
 
-        // emit the event
+        // Emit the Withdraw event to log the withdrawal.
         emit Withdraw(_withdrawAmount);
     }
 }
+
