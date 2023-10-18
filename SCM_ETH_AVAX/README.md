@@ -17,12 +17,13 @@ https://metacrafterc-scmstarter-zh9jjfl7x7b.ws-us105.gitpod.io/
 
 ### Executing program
 
-1. Open two additional terminals 
-2. In the second terminal, type: npx hardhat node
-3. In the third terminal, type: npx hardhat run --network localhost scripts/deploy.js
-4. Go back tp the first terminal, type: npm run dev to launch the front-end.
-5. Be sure to connect your Metamask wallet to the program
-6. After connecting, simply click the deposit or withrawal button to perform transcations.
+1. In the main directory type: npm i
+2. Open two additional terminals 
+3. In the second terminal, type: npx hardhat node
+4. In the third terminal, type: npx hardhat run --network localhost scripts/deploy.js
+5. Go back tp the first terminal, type: npm run dev to launch the front-end.
+6. Be sure to connect your Metamask wallet to the program
+7. After connecting, simply click the deposit or withrawal button to perform transcations.
 
 ## Authors
 @Metacrafters
