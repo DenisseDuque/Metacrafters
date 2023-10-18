@@ -12,8 +12,7 @@ It also shows the function on the front-end of the program.
 
 ### Installing
 
-* Open the link below to access the gitpod workspace: 
-https://metacrafterc-scmstarter-zh9jjfl7x7b.ws-us105.gitpod.io/ 
+* Open the project file into VS Code or Gitpod
 
 ### Executing program
 
