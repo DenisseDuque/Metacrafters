@@ -1,70 +1,67 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-// Import any necessary libraries or modules here if needed.
-// import "hardhat/console.sol";
-
+// Assessment contract represents a simple account with deposit and withdrawal functionality.
 contract Assessment {
-    address payable public owner; // Public variable to store the owner's address.
-    uint256 public balance; // Public variable to store the contract's balance.
+    //Variable for the owner of the account
+    address payable public owner;
+    
+    //Variable for the current balance of the account.
+    uint256 public balance;
 
-    event Deposit(uint256 amount); // Event to log deposits.
-    event Withdraw(uint256 amount); // Event to log withdrawals.
+    //Event during account deposit transactions 
+    event Deposit(uint256 amount);
+    
+   //Event during account withdraw transactions
+    event Withdraw(uint256 amount);
 
-    // Constructor to initialize the contract with an initial balance.
+    //The constructor that initializes the contract 
+    //with an initial balance and sets the owner.
     constructor(uint initBalance) payable {
-        owner = payable(msg.sender); // Set the contract owner to the sender of the deployment transaction.
-        balance = initBalance; // Set the initial balance to the provided parameter.
+        owner = payable(msg.sender);
+        balance = initBalance;
     }
 
-    // Function to get the current balance of the contract.
-    function getBalance() public view returns(uint256) {
+    //Function that gets the current balance of the account.
+    function getBalance() public view returns (uint256) {
         return balance;
     }
 
-    // Function to deposit funds into the contract.
+    //Modifier to ensure there's a sufficient balance for an operation.
+    modifier sufficientBalance(uint256 _amount) {
+        require(balance >= _amount, "Not enough balance.");
+        _;
+    }
+
+    // Deposit function allows the owner to add funds to the account.
     function deposit(uint256 _amount) public payable {
-        uint _previousBalance = balance;
+        // Calculates the new balance after the deposit.
+        uint256 newBalance = balance + _amount;
 
-        // Ensure that the sender is the owner.
-        require(msg.sender == owner, "You are not the owner of this account");
+        // Checks if the sender is the owner, otherwise revert.
+        if (msg.sender != owner) {
+            revert("ERROR: Only for the account owner");
+        }
 
-        // Increase the contract's balance by the deposit amount.
-        balance += _amount;
-
-        // Assert that the balance has been updated correctly.
-        assert(balance == _previousBalance + _amount);
-
-        // Emit the Deposit event to log the deposit.
+        // Updates the balance and emits the deposit event.
+        balance = newBalance;
         emit Deposit(_amount);
     }
 
-    // Custom error definition for insufficient balance.
-    error InsufficientBalance(uint256 balance, uint256 withdrawAmount);
+    // Withdraw function allows withdrawal of funds from the account.
+    function withdraw(uint256 _withdrawAmount) public sufficientBalance(_withdrawAmount) {
+        // Calculates the new balance after the withdrawal.
+        uint256 newBalance = balance - _withdrawAmount;
 
-    // Function to withdraw funds from the contract.
-    function withdraw(uint256 _withdrawAmount) public {
-        // Ensure that the sender is the owner.
-        require(msg.sender == owner, "You are not the owner of this account");
-        uint _previousBalance = balance;
-
-        // Check if the balance is sufficient for the requested withdrawal.
-        if (balance < _withdrawAmount) {
-            // Revert with the InsufficientBalance error if there's not enough balance.
-            revert InsufficientBalance({
-                balance: balance,
-                withdrawAmount: _withdrawAmount
-            });
+        // Checks if the sender is the owner, otherwise revert.
+        if (msg.sender != owner) {
+            revert("ERROR: Only for the account owner");
         }
 
-        // Deduct the withdrawal amount from the contract's balance.
-        balance -= _withdrawAmount;
-
-        // Assert that the balance has been updated correctly.
-        assert(balance == (_previousBalance - _withdrawAmount));
-
-        // Emit the Withdraw event to log the withdrawal.
+        // Updates the balance and emits the Withdraw event.
+        balance = newBalance;
         emit Withdraw(_withdrawAmount);
     }
 }
+
 
