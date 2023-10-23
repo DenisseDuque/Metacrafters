@@ -25,5 +25,4 @@ It also shows the function on the front-end of the program.
 7. After connecting, simply click the deposit or withrawal button to perform transcations.
 
 ## Authors
-@Metacrafters
 @Denisse Duque
