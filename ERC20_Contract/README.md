@@ -1,25 +1,27 @@
-# Project Title: Custom ERC20 Token Contract
+# Project Title: Degen Token (ERC-20)
 
-This is a custom Ethereum ERC20 token contract that extends the functionality of the 
-OpenZeppelin ERC20 base contract.
+This is a Solidity smart contract for Degen Token that extends the functionality of the 
+OpenZeppelin ERC20 standard with ownership functionality.
 
 ## Description
 
-This project provides a custom Ethereum ERC20 token contract that is built on top of the 
-OpenZeppelin ERC20 base contract. It allows the creation, minting, and transfer of custom 
-tokens.
+This is a Solidity smart contract for the Degen Token that allows for minting, burning, and transferring of tokens.
+Its also possible to chceck token balance and redeem in-game items.
 
 ## Getting Started
 
 ### Installing
 
-* Simply deploy the code via Remix or Hardhat
+* Simply deploy the code via Remix or Hardhat using Metamask
 
 ### Executing program
 
-1. Deploy the ERC20Contract smart contract
-2. Initialize the contract with the desired token name, symbol, and an initial supply.
-3. Interact with the contract through its functions, such as minting, burning,  and transfering tokens
+If using Remix:
+1. Connect to Metamask Wallet
+2. Deploy the DegenToken smart contract
+3. Interact with its functions, such as minting, burning, and transfering tokens.
+4. Redeem in-game items using the redeemItems function
+5. Change ownership using the various ownership functions
 
 ## Authors
 @Denisse Duque
